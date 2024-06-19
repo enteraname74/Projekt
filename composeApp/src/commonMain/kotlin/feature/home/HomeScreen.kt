@@ -94,7 +94,6 @@ private fun HomeViewContent(
             onClick = onOpenProjectCreationView,
             iconSpec = FloatingIconSpec(
                 icon = Icons.Rounded.Add,
-                tint = MaterialTheme.colorScheme.onSecondary
             )
         )
     }
