@@ -11,8 +11,13 @@ object UiConst {
     }
 
     object IconSize {
-        val small = 8.dp
-        val medium = 16.dp
-        val large = 32.dp
+        val small = 16.dp
+        val medium = 32.dp
+        val large = 48.dp
+    }
+
+    object AnimationDuration {
+        const val short: Int = 150
+        const val normal: Int = 300
     }
 }
