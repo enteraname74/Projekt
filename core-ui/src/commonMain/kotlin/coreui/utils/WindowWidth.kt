@@ -8,8 +8,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 enum class WindowWidth(val maxValue: Dp) {
-    Compact(maxValue = 600.dp),
-    Medium(maxValue = 840.dp),
+    Compact(maxValue = 300.dp),
+    Medium(maxValue = 600.dp),
     Huge(maxValue = Dp.Infinity);
 
     companion object {
