@@ -22,8 +22,6 @@ fun ProjectCreation(
     description: String = "",
     onDismiss: () -> Unit,
     onValidate: () -> Unit,
-    onSetTitle: (String) -> Unit,
-    onSetDescription: (String) -> Unit,
 ) {
 
     val titleState = rememberTextFieldState(initialText = title)
@@ -31,7 +29,8 @@ fun ProjectCreation(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .then(modifier),
         verticalArrangement = Arrangement.spacedBy(UiConst.Spacing.large),
     ) {
         PktIconButton(

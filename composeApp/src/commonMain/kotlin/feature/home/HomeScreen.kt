@@ -5,20 +5,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalWindowInfo
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import com.github.enteraname74.projekt.feature.home.composable.ProjectCreation
 import com.github.enteraname74.projekt.feature.home.composable.ProjectList
 import coreui.button.FloatingIconSpec
 import coreui.button.PktFloatingButton
-import coreui.modal.PktModalHolder
+import coreui.modal.PktModalScreen
 import coreui.theme.UiConst
 import java.util.*
 
@@ -48,7 +45,7 @@ private fun HomeView(
         mutableStateOf(false)
     }
 
-    PktModalHolder(
+    PktModalScreen(
         isModalShown = isModalShown,
         onModalDismiss = { isModalShown = false },
         content = {
@@ -62,8 +59,6 @@ private fun HomeView(
             ProjectCreation(
                 onDismiss = { isModalShown = false },
                 onValidate = {},
-                onSetTitle = {},
-                onSetDescription = {},
             )
         }
     )
