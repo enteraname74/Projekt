@@ -14,6 +14,7 @@ import java.util.*
 fun ProjectList(
     projects: List<Project>,
     onProjectClicked: (id: UUID) -> Unit,
+    onMoreClicked: (project: Project) -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -27,7 +28,7 @@ fun ProjectList(
                 ProjectCard(
                     project = project,
                     onClick = { onProjectClicked(project.id) },
-                    onMoreClick = {}
+                    onMoreClick = { onMoreClicked(project) }
                 )
             }
         }

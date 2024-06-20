@@ -12,14 +12,6 @@ open class TopBarAction(
     val contentDescription: String? = null,
 )
 
-internal fun TopBarAction.toIconSpec(): IconSpec =
-    IconSpec(
-        icon = icon,
-        contentDescription = contentDescription,
-        size = UiConst.IconSize.medium,
-        tint = PktTheme.colorScheme.onSurface,
-    )
-
 class NavigationAction(
     onClick: () -> Unit
 ): TopBarAction(

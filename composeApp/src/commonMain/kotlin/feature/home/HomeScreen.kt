@@ -1,22 +1,29 @@
 package com.github.enteraname74.projekt.feature.home
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
-import com.github.enteraname74.projekt.feature.home.composable.ProjectCreation
+import com.github.enteraname74.projekt.feature.home.composable.ProjectManagement
 import com.github.enteraname74.projekt.feature.home.composable.ProjectList
 import coreui.button.FloatingIconSpec
 import coreui.button.PktFloatingButton
 import coreui.modal.PktModalScreen
+import coreui.theme.PktTheme
 import coreui.theme.UiConst
+import coreui.topbar.TopBarColors
+import coreui.topbar.PktTopBar
+import model.Project
+import org.jetbrains.compose.resources.stringResource
+import projekt.composeapp.generated.resources.Res
+import projekt.composeapp.generated.resources.app_name
 import java.util.*
 
 class HomeScreen : Screen {
@@ -25,11 +32,17 @@ class HomeScreen : Screen {
     override fun Content() {
         val screenModel = koinScreenModel<HomeViewModel>()
         val homeUiState: HomeUiState by screenModel.homeUiState.collectAsState()
+        val projects: List<Project> by screenModel.projects.collectAsState()
 
         HomeView(
             homeUiState = homeUiState,
-            onProjectClicked = screenModel::deleteProjectById,
-            onOpenProjectCreationView = screenModel::addProject
+            projects = projects,
+            onProjectClicked = {},
+            onUpsertProject = screenModel::upsertProject,
+            onDeleteProject = screenModel::deleteProjectById,
+            onProjectSelected = screenModel::setSelectedProject,
+            onCreateProjectClicked = { screenModel.setSelectedProject(project = null) },
+            setProjectModalVisibility = screenModel::setProjectManagementModalVisibility
         )
     }
 
@@ -38,27 +51,31 @@ class HomeScreen : Screen {
 @Composable
 private fun HomeView(
     homeUiState: HomeUiState,
+    projects: List<Project>,
     onProjectClicked: (projectId: UUID) -> Unit,
-    onOpenProjectCreationView: () -> Unit,
+    onProjectSelected: (project: Project) -> Unit,
+    onDeleteProject: (projectId: UUID) -> Unit,
+    onUpsertProject: (project: Project) -> Unit,
+    setProjectModalVisibility: (isShown: Boolean) -> Unit,
+    onCreateProjectClicked: () -> Unit,
 ) {
-    var isModalShown by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     PktModalScreen(
-        isModalShown = isModalShown,
-        onModalDismiss = { isModalShown = false },
+        isModalShown = homeUiState.isProjectManagementModalShown,
+        onModalDismiss = { setProjectModalVisibility(false) },
         content = {
             HomeViewContent(
-                homeUiState = homeUiState,
                 onProjectClicked = onProjectClicked,
-                onOpenProjectCreationView = { isModalShown = true }
+                onCreateProjectClicked = onCreateProjectClicked,
+                onMoreClicked = onProjectSelected,
+                projects = projects,
             )
         },
         modalContent = {
-            ProjectCreation(
-                onDismiss = { isModalShown = false },
-                onValidate = {},
+            ProjectManagement(
+                onDismiss = { setProjectModalVisibility(false) },
+                onValidate = onUpsertProject,
+                project = homeUiState.selectedProject,
+                onDelete = onDeleteProject,
             )
         }
     )
@@ -67,29 +84,44 @@ private fun HomeView(
 
 @Composable
 private fun HomeViewContent(
-    homeUiState: HomeUiState,
+    projects: List<Project>,
     onProjectClicked: (projectId: UUID) -> Unit,
-    onOpenProjectCreationView: () -> Unit,
+    onMoreClicked: (project: Project) -> Unit,
+    onCreateProjectClicked: () -> Unit,
 ) {
-    Box(
+    Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
-        ProjectList(
-            projects = homeUiState.projects,
-            onProjectClicked = onProjectClicked,
-        )
-        PktFloatingButton(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(
-                    end = UiConst.Spacing.medium,
-                    bottom = UiConst.Spacing.medium,
-                ),
-            onClick = onOpenProjectCreationView,
-            iconSpec = FloatingIconSpec(
-                icon = Icons.Rounded.Add,
+        PktTopBar(
+            title = stringResource(Res.string.app_name),
+            colors = TopBarColors(
+                containerColor = PktTheme.colorScheme.surfaceContainer,
+                contentColor = PktTheme.colorScheme.onSurface,
             )
         )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = UiConst.Spacing.medium),
+        ) {
+            ProjectList(
+                projects = projects,
+                onProjectClicked = onProjectClicked,
+                onMoreClicked = onMoreClicked,
+            )
+            PktFloatingButton(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(
+                        end = UiConst.Spacing.medium,
+                        bottom = UiConst.Spacing.medium,
+                    ),
+                onClick = onCreateProjectClicked,
+                iconSpec = FloatingIconSpec(
+                    icon = Icons.Rounded.Add,
+                )
+            )
+        }
     }
 }

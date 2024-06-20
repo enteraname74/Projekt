@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text2.BasicTextField2
 import androidx.compose.foundation.text2.input.TextFieldLineLimits
 import androidx.compose.foundation.text2.input.TextFieldState
@@ -33,7 +35,9 @@ fun PktTextField(
     textState: TextFieldState,
     singleLine: Boolean = false,
     label: String? = null,
-    colors: PktTextFieldColor = PktTextFieldColor()
+    colors: PktTextFieldColor = PktTextFieldColor(),
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -68,6 +72,8 @@ fun PktTextField(
                 .padding(UiConst.Spacing.medium)
                 .then(modifier),
             lineLimits = if (singleLine) TextFieldLineLimits.SingleLine else TextFieldLineLimits.Default,
+            keyboardActions = keyboardActions,
+            keyboardOptions = keyboardOptions,
         )
     }
 }

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Projekt</string>
+    <string name="homePage_projectManagement_create">Create project</string>
+    <string name="homePage_projectManagement_edit">Edit project</string>
+    <string name="homePage_projectManagement_titleField">Title</string>
+    <string name="homePage_projectManagement_descriptionField">Description</string>
+</resources>

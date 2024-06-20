@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.Dp
 import coreui.spec.IconSpec
 import coreui.theme.PktTheme
 import coreui.theme.UiConst
+import projekt.core_ui.generated.resources.Res
 
 @Composable
 fun PktFloatingButton(
@@ -40,7 +41,7 @@ fun PktFloatingButton(
 class FloatingIconSpec(
     icon: ImageVector,
     contentDescription: String? = null,
-    size: Dp = UiConst.IconSize.medium,
+    size: Dp = UiConst.IconSize.large,
     tint: Color = PktTheme.colorScheme.onSecondaryContainer,
 ) : IconSpec(
     icon = icon,

@@ -28,4 +28,10 @@ object PktTypography {
         fontSize = 14.sp,
         fontWeight = FontWeight.Normal,
     )
+
+    val bodyBold = TextStyle(
+        color = PktTheme.colorScheme.onSurface,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Bold,
+    )
 }

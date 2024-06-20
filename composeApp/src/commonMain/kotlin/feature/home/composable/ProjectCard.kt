@@ -6,14 +6,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coreui.button.PktIconButton
 import coreui.spec.IconSpec
+import coreui.text.PktText
+import coreui.theme.PktTheme
 import coreui.theme.UiConst
 import model.Project
 
@@ -37,15 +37,15 @@ fun ProjectCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
+            PktText(
                 text = project.title,
-                color = MaterialTheme.colorScheme.onBackground
+                style = PktTheme.typography.h3,
             )
             PktIconButton(
                 onClick = onMoreClick,
                 iconSpec = IconSpec(
                     icon = Icons.Rounded.MoreVert,
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     size = UiConst.IconSize.medium
                 )
             )
@@ -54,7 +54,7 @@ fun ProjectCard(
             modifier = Modifier
                 .fillMaxSize(.8f)
                 .height(1.dp)
-                .background(MaterialTheme.colorScheme.surfaceContainer)
+                .background(MaterialTheme.colorScheme.onSurface)
         )
     }
 }
