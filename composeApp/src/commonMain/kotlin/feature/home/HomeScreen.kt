@@ -11,8 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.github.enteraname74.projekt.feature.home.composable.ProjectManagement
 import com.github.enteraname74.projekt.feature.home.composable.ProjectList
+import com.github.enteraname74.projekt.feature.project.ProjectScreen
 import coreui.button.FloatingIconSpec
 import coreui.button.PktFloatingButton
 import coreui.modal.PktModalScreen
@@ -30,14 +33,20 @@ class HomeScreen : Screen {
 
     @Composable
     override fun Content() {
-        val screenModel = koinScreenModel<HomeViewModel>()
+        val screenModel: HomeViewModel = koinScreenModel()
         val homeUiState: HomeUiState by screenModel.homeUiState.collectAsState()
         val projects: List<Project> by screenModel.projects.collectAsState()
+
+        val navigator = LocalNavigator.currentOrThrow
 
         HomeView(
             homeUiState = homeUiState,
             projects = projects,
-            onProjectClicked = {},
+            onProjectClicked = { projectId ->
+                navigator.push(
+                    ProjectScreen(projectId = projectId)
+                )
+            },
             onUpsertProject = screenModel::upsertProject,
             onDeleteProject = screenModel::deleteProjectById,
             onProjectSelected = screenModel::setSelectedProject,
@@ -45,7 +54,6 @@ class HomeScreen : Screen {
             setProjectModalVisibility = screenModel::setProjectManagementModalVisibility
         )
     }
-
 }
 
 @Composable

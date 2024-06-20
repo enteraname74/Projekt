@@ -7,12 +7,16 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import coreui.text.PktText
+import coreui.theme.PktTheme
 
 @Composable
 fun PktCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
-    content: @Composable (ColumnScope.() -> Unit)
+    colors: PktCardColors = PktCardColors(),
+    content: @Composable (ColumnScope.() -> Unit),
 ) {
     val clickableModifier = if (onClick != null) {
         Modifier.clickable(onClick = onClick)
@@ -23,9 +27,15 @@ fun PktCard(
     Card(
         modifier = clickableModifier.then(modifier),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            containerColor = colors.containerColor,
+            contentColor = colors.containerColor,
         ),
-        content = content
-    )
+    ) {
+        content()
+    }
 }
+
+data class PktCardColors(
+    val containerColor: Color = PktTheme.colorScheme.primaryContainer,
+    val contentColor: Color = PktTheme.colorScheme.onPrimaryContainer,
+)

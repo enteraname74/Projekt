@@ -19,6 +19,7 @@ class TaskCollectionDao {
             TaskCollectionTable.batchUpsert(collections) { collection ->
                 this[TaskCollectionTable.id] = collection.id
                 this[TaskCollectionTable.title] = collection.title
+                this[TaskCollectionTable.projectId] = collection.projectId
             }
         }
     }
@@ -28,6 +29,7 @@ class TaskCollectionDao {
             TaskCollectionTable.upsert {
                 it[id] = collection.id
                 it[title] = collection.title
+                it[projectId] = collection.projectId
             }
         }
     }

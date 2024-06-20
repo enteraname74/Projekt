@@ -4,4 +4,5 @@
     <string name="homePage_projectManagement_edit">Modifier le projet</string>
     <string name="homePage_projectManagement_titleField">Titre</string>
     <string name="homePage_projectManagement_descriptionField">Description</string>
+    <string name="projectPage_newColumn">Nouvelle colonne</string>
 </resources>

@@ -14,5 +14,6 @@ internal fun ResultRow.toTaskCollection(): TaskCollection =
     TaskCollection(
         id = this[TaskCollectionTable.id].value,
         title = this[TaskCollectionTable.title],
-        tasks = emptyList()
+        tasks = emptyList(),
+        projectId = this[TaskCollectionTable.projectId].value
     )

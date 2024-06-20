@@ -25,8 +25,8 @@ fun PktFloatingButton(
         modifier = modifier,
         onClick = onClick,
         shape = CircleShape,
-        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
     ) {
         Icon(
             modifier = Modifier
@@ -42,7 +42,7 @@ class FloatingIconSpec(
     icon: ImageVector,
     contentDescription: String? = null,
     size: Dp = UiConst.IconSize.large,
-    tint: Color = PktTheme.colorScheme.onSecondaryContainer,
+    tint: Color = PktTheme.colorScheme.onPrimaryContainer,
 ) : IconSpec(
     icon = icon,
     contentDescription = contentDescription,
